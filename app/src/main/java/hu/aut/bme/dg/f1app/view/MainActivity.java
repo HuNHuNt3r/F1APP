@@ -6,14 +6,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.orm.SugarContext;
+
 import javax.inject.Inject;
 
+import hu.aut.bme.dg.f1app.BuildConfig;
 import hu.aut.bme.dg.f1app.F1Application;
 import hu.aut.bme.dg.f1app.R;
 import hu.aut.bme.dg.f1app.presenter.MainPresenter;
@@ -26,6 +30,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(BuildConfig.FLAVOR.equals("full")){
+            SugarContext.init(this);
+            Log.d("F1APP", "sugar orm is in use");
+        }else{
+            Log.d("F1APP", "mock version is in use");
+        }
+
+
+
         setContentView(R.layout.activity_main);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
@@ -72,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onDestroy() {
         super.onDestroy();
         mainPresenter.detachView();
+
+        if(BuildConfig.FLAVOR.equals("full")) {
+
+            Log.d("F1APP", "sugar orm was in use");
+            SugarContext.terminate();
+        }
+
     }
 
     @Override

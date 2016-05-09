@@ -39,7 +39,7 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SugarContext.init(this);
+
         setContentView(R.layout.activity_drivers);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,16 +66,6 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
         int id = item.getItemId();
 
         if (id == R.id.driver_refresh) {
-
-            if(BuildConfig.FLAVOR.equals("full")){
-                SugarContext.terminate();
-                System.out.println("sugar orm out");
-            }else{
-                System.out.println("mock version");
-
-            }
-
-
             driversPresenter.refreshDrivers();
         }
         if (id == R.id.driver_add) {
@@ -98,13 +88,6 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
 
         super.onStop();
         driversPresenter.detachView();
-    }
-
-    @Override
-    public void onDestroy() {
-
-        super.onDestroy();
-        SugarContext.terminate();
     }
 
     @Override
