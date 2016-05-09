@@ -6,6 +6,9 @@ import hu.aut.bme.dg.f1app.view.ViewModule;
 
 /**
  * Created by DG on 2016.04.24..
+ *
+ * Free picture from:
+ * http://www.freepik.com/free-vector/racing-cars-pack_749175.htm
  */
 public class F1Application extends Application {
 

@@ -8,8 +8,14 @@ import dagger.Provides;
  */
 @Module
 public class InteractorModule {
+
     @Provides
-    public StringInteractor getStringInteractor() {
-        return new StringInteractor();
+    public DriverInteractor getDriverInteractor() {
+        return new DriverInteractor();
     }
+    @Provides
+    public TeamInteractor getTeamInteractor() {
+        return new TeamInteractor();
+    }
+
 }

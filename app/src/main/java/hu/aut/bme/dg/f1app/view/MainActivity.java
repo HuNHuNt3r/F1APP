@@ -1,5 +1,6 @@
 package hu.aut.bme.dg.f1app.view;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,25 +27,24 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        findViewById(R.id.btnBtn).setOnClickListener(new Button.OnClickListener() {
+        findViewById(R.id.showDriversButton).setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                mainPresenter.doStuff();
+                mainPresenter.showDrivers();
+            }
+        });
+
+        findViewById(R.id.showTeamsButton).setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mainPresenter.showTeams();
             }
         });
     }
@@ -58,17 +58,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
             return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -84,7 +75,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void showString(String s) {
-        ((TextView)findViewById(R.id.tvPrint)).setText(s);
+    public void showDrivers() {
+        Intent intent = new Intent(MainActivity.this, DriversActivity.class);
+//        intent.putExtra(KEY_ARTIST,artistSearchTerm);
+        startActivity(intent);
     }
+
+    @Override
+    public void showTeams() {
+        Intent intent = new Intent(MainActivity.this, TeamsActivity.class);
+//        intent.putExtra(KEY_ARTIST,artistSearchTerm);
+        startActivity(intent);
+    }
+
+
 }

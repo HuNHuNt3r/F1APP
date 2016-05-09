@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.TeamsActivity">
+
+    <item
+        android:id="@+id/team_refresh"
+        android:orderInCategory="1"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="refresh"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/team_add"
+        android:orderInCategory="2"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="add"
+        app:showAsAction="always" />
+</menu>

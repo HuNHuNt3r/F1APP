@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">F1APP</string>
+    <string name="drivers">Drivers</string>
+    <string name="teams">Teams</string>
+    <string name="driveradd">Add driver</string>
+    <string name="driveredit">Edit driver</string>
+    <string name="teamadd">Add team</string>
+    <string name="teamedit">Edit team</string>
 </resources>

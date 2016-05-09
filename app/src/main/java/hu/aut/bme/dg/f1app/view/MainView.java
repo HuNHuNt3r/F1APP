@@ -5,6 +5,8 @@ package hu.aut.bme.dg.f1app.view;
  */
 public interface MainView {
 
-    void showString(String s);
+    void showDrivers();
+
+    void showTeams();
 
 }

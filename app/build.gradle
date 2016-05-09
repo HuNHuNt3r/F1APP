@@ -18,8 +18,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        mock {
+            applicationId "hu.aut.bme.dg.f1app.testmodel.test"
+            versionName "1.0-test"
+        }
+        full {
+            applicationId "hu.aut.bme.dg.f1app.model.full"
+            versionName "1.0-full"
+        }
+    }
     lintOptions {
         disable 'InvalidPackage'
+    }
+    sourceSets {
+        main { java.srcDirs = ['src/main/java', 'src/full', 'src/full/java', 'src/mock/java'] }
     }
 }
 
@@ -34,4 +47,7 @@ dependencies {
     compile 'com.google.dagger:dagger:2.0.1'
     apt "com.google.dagger:dagger-compiler:2.0.1"
     provided 'javax.annotation:jsr250-api:1.0'
+
+    //sugar orm
+    compile 'com.github.satyan:sugar:1.4'
 }
