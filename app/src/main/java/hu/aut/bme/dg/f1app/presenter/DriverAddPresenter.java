@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import hu.aut.bme.dg.f1app.F1Application;
 import hu.aut.bme.dg.f1app.interactor.DriverInteractor;
+import hu.aut.bme.dg.f1app.model.Driver;
 import hu.aut.bme.dg.f1app.view.DriverAddView;
 import hu.aut.bme.dg.f1app.view.DriversView;
 
@@ -22,7 +23,13 @@ public class DriverAddPresenter extends Presenter<DriverAddView> {
 
     public void saveDriver() {
 
-        driverInteractor.addDriver();
+        Driver testDriver = new Driver();
+        testDriver.driverName = "KimiKimi";
+        testDriver.driverAge = 10;
+        testDriver.driverNumber = 111;
+        testDriver.driverImage = "IMG";
+
+        driverInteractor.insertDriver(testDriver);
         view.saveDriver();
     }
 

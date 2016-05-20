@@ -1,34 +1,47 @@
 package hu.aut.bme.dg.f1app.model;
 
-import com.orm.SugarRecord;
-import com.orm.dsl.Table;
+import java.util.List;
 
 /**
- * Created by DG on 2016.05.09..
+ * Created by DG on 2016.05.17..
  */
-@Table
 public class DriverModel {
 
-    private Long id;
-
-    private String driverName;
-    private int driverNumber;
-    private int driverAge;
-    private long driverTeamId;
-
     public DriverModel() {
-
     }
 
-    public DriverModel(String driverName, int driverNumber, int driverAge, long driverTeamId){
-        this.driverName = driverName;
-        this.driverNumber = driverNumber;
-        this.driverAge = driverAge;
-        this.driverTeamId =  driverTeamId;
+    public List<Driver> getDrivers() {
+
+        List<Driver> values = Driver.listAll(Driver.class);
+        return values;
     }
 
-    public String getName() {
-        return this.driverName;
+    public Driver getDriver(int driverId) {
+
+        Driver driver = Driver.findById(Driver.class, driverId);
+        return driver;
     }
+
+    public void insertDriver(Driver toInsert) {
+
+        toInsert.save();
+    }
+
+    public void updateDriver(Driver newDriver){
+
+        Driver driver = Driver.findById(Driver.class, newDriver.driverId);
+        driver.driverName = newDriver.driverName;
+        driver.driverNumber = newDriver.driverNumber;
+        driver.driverAge = newDriver.driverAge;
+        driver.driverImage = newDriver.driverImage;
+        driver.driverTeam = newDriver.driverTeam;
+        driver.save();
+    }
+
+    public void deleteDriver(int driverId){
+
+        Driver driver = Driver.findById(Driver.class, driverId);
+        driver.delete();
+    }
+
 }
-

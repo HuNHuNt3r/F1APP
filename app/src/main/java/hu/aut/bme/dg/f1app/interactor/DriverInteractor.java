@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import hu.aut.bme.dg.f1app.F1Application;
+import hu.aut.bme.dg.f1app.model.Driver;
 import hu.aut.bme.dg.f1app.model.DriverModel;
 
 /**
@@ -18,25 +19,32 @@ public class DriverInteractor {
     @Inject
     DriverModel model;
 
-    private List<DriverModel> drivers;
-
     public DriverInteractor() {
 
         F1Application.injector.inject(this);
-        this.drivers = new ArrayList<DriverModel>();
     }
 
-    public List<DriverModel> getDrivers() {
-        return drivers;
+    public List<Driver> getDrivers() {
+        return model.getDrivers();
     }
 
-    public DriverModel getDriver(int i) {
-        return this.drivers.get(i);
+    public Driver getDriver(int driverId) {
+        return model.getDriver(driverId);
     }
 
-    public void addDriver() {
-
-        DriverModel driver = new DriverModel("TesztElek", 7, 30,  1);
-        SugarRecord.save(driver);
+    public void insertDriver(Driver newDriver)
+    {
+        model.insertDriver(newDriver);
     }
+
+    public void updateDriver(Driver newDriver){
+
+        model.updateDriver(newDriver);
+    }
+
+    public void deleteDriver(int driverId){
+
+        model.deleteDriver(driverId);
+    }
+
 }

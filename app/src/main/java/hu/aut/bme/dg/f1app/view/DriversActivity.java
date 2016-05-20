@@ -10,15 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.orm.SugarContext;
 import com.orm.SugarRecord;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import hu.aut.bme.dg.f1app.BuildConfig;
 import hu.aut.bme.dg.f1app.F1Application;
 import hu.aut.bme.dg.f1app.R;
+import hu.aut.bme.dg.f1app.model.Driver;
 import hu.aut.bme.dg.f1app.model.DriverModel;
 import hu.aut.bme.dg.f1app.presenter.DriversPresenter;
 
@@ -91,8 +96,15 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
     }
 
     @Override
-    public void refreshDrivers() {
-        //refresh list
+    public void refreshDrivers(List<Driver> drivers) {
+
+        final ArrayList<Driver> list = new ArrayList<>();
+        for (int i = 0; i < drivers.size(); ++i) {
+            list.add(drivers.get(i));
+        }
+        ((ListView) findViewById(R.id.driverListView)).setAdapter(
+                new DriverAdapter(getApplicationContext(), R.layout.list_driver_item, list));
+
     }
 
     @Override

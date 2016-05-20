@@ -14,19 +14,21 @@ import hu.aut.bme.dg.f1app.view.MainView;
  */
 public class DriversPresenter extends Presenter<DriversView> {
 
+    @Inject
+    public DriverInteractor driverInteractor;
+
     public DriversPresenter() {
         F1Application.injector.inject(this);
     }
 
     public void refreshDrivers() {
-//        networkExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                artistsInteractor.getArtists(artistQuery);
-//            }
-//        });
 
-        view.refreshDrivers();
+        try {
+            view.refreshDrivers(driverInteractor.getDrivers());
+        } catch (Exception e) {
+            view.refreshDrivers(driverInteractor.getDrivers());
+            //view.showMessage(e.getMessage());
+        }
 
     }
 
