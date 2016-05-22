@@ -7,9 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.orm.SugarContext;
@@ -44,17 +46,12 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_drivers);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         F1Application.injector.inject(this);
-
-//        refreshDrivers();
-//        driversPresenter.showDriverDetails(driverId);
 
     }
 
@@ -70,6 +67,9 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
 
         int id = item.getItemId();
 
+        if (id == R.id.driver_back) {
+            driversPresenter.showMain();
+        }
         if (id == R.id.driver_refresh) {
             driversPresenter.refreshDrivers();
         }
@@ -84,8 +84,8 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
     public void onStart() {
         super.onStart();
 
-//        artist = getActivity().getIntent().getStringExtra(MainActivity.KEY_ARTIST);
         driversPresenter.attachView(this);
+        driversPresenter.refreshDrivers();
     }
 
     @Override
@@ -95,27 +95,39 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
         driversPresenter.detachView();
     }
 
-    @Override
+    public void showMain() {
+        Intent intent = new Intent(DriversActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
     public void refreshDrivers(List<Driver> drivers) {
 
         final ArrayList<Driver> list = new ArrayList<>();
         for (int i = 0; i < drivers.size(); ++i) {
             list.add(drivers.get(i));
         }
-        ((ListView) findViewById(R.id.driverListView)).setAdapter(
+
+        ListView driverListView = (ListView) findViewById(R.id.driverListView);
+        driverListView.setAdapter(
                 new DriverAdapter(getApplicationContext(), R.layout.list_driver_item, list));
+        driverListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                driversPresenter.showDriverDetails(id);
+            }
+
+        });
 
     }
 
-    @Override
     public void showDriverAdd() {
 
         Intent intent = new Intent(DriversActivity.this, DriverAddActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void showDriverDetails(int driverId) {
+    public void showDriverDetails(long driverId) {
 
         Intent intent = new Intent(DriversActivity.this, DriverEditActivity.class);
         intent.putExtra(KEY_DRIVER, driverId);

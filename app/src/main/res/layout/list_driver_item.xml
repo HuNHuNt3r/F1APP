@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     >
 
-    <TextView
+    <ImageView
         android:id="@+id/driverImage"
         android:layout_width="80dip"
         android:layout_height="80dip"

@@ -4,15 +4,22 @@
     tools:context=".view.TeamsActivity">
 
     <item
-        android:id="@+id/team_refresh"
+        android:id="@+id/team_back"
         android:orderInCategory="1"
+        android:icon="@android:drawable/ic_media_rew"
+        android:title="back"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/team_refresh"
+        android:orderInCategory="2"
         android:icon="@android:drawable/ic_popup_sync"
         android:title="refresh"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/team_add"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:icon="@android:drawable/ic_input_add"
         android:title="add"
         app:showAsAction="always" />

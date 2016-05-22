@@ -1,6 +1,7 @@
 package hu.aut.bme.dg.f1app.model;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
 
@@ -9,24 +10,26 @@ import java.util.List;
  */
 public class Team extends SugarRecord {
 
+    @Ignore
     public int teamId;
+
     public String teamName;
     public String teamLeader;
     public String teamImage;
-    //public Driver firstDriver;
-    //public Driver secondDriver;
+    public Driver firstDriver;
+    public Driver secondDriver;
 
     public Team() {
 
     }
 
-    public Team(String teamName, String teamLeader, String teamImage){ //, Driver firstDriver, Driver secondDriver){
+    public Team(String teamName, String teamLeader, String teamImage, Driver firstDriver, Driver secondDriver){
 
         this.teamName = teamName;
         this.teamLeader = teamLeader;
         this.teamImage = teamImage;
-        //this.firstDriver = firstDriver;
-        //this.secondDriver = secondDriver;
+        this.firstDriver = firstDriver;
+        this.secondDriver = secondDriver;
     }
 
 

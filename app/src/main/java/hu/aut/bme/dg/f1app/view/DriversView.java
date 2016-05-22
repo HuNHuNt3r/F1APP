@@ -10,11 +10,13 @@ import hu.aut.bme.dg.f1app.model.DriverModel;
  */
 public interface DriversView {
 
+    void showMain();
+
     void refreshDrivers(List<Driver> drivers);
 
     void showDriverAdd();
 
-    void showDriverDetails(int driverId);
+    void showDriverDetails(long driverId);
 
 
 

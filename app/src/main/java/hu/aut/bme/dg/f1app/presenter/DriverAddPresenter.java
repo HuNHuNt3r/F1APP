@@ -21,16 +21,20 @@ public class DriverAddPresenter extends Presenter<DriverAddView> {
     }
 
 
-    public void saveDriver() {
+    public void saveDriver(String driverName, int driverNumber, int driverAge, String driverImage) {
 
-        Driver testDriver = new Driver();
-        testDriver.driverName = "KimiKimi";
-        testDriver.driverAge = 10;
-        testDriver.driverNumber = 111;
-        testDriver.driverImage = "IMG";
+        Driver newDriver = new Driver();
+        newDriver.driverName = driverName;
+        newDriver.driverAge = driverAge;
+        newDriver.driverNumber = driverNumber;
+        newDriver.driverImage = driverImage;
 
-        driverInteractor.insertDriver(testDriver);
+        driverInteractor.insertDriver(newDriver);
         view.saveDriver();
+    }
+
+    public void browseDriverImage() {
+        view.browseDriverImage();
     }
 
 

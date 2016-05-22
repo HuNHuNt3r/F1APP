@@ -2,6 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.aut.bme.dg.f1app">
 
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="24"
+        />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".F1Application"
         android:allowBackup="true"
@@ -10,8 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="DATABASE" android:value="database.db" />
-        <meta-data android:name="VERSION" android:value="7" />
+        <meta-data android:name="DATABASE" android:value="testdbagain.db" />
+        <meta-data android:name="VERSION" android:value="10" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="hu.aut.bme.dg.f1app.model" />
 

@@ -37,9 +37,9 @@ public class DriverInteractor {
         model.insertDriver(newDriver);
     }
 
-    public void updateDriver(Driver newDriver){
+    public void updateDriver(Driver editDriver){
 
-        model.updateDriver(newDriver);
+        model.updateDriver(editDriver);
     }
 
     public void deleteDriver(int driverId){

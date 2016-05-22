@@ -1,10 +1,16 @@
 package hu.aut.bme.dg.f1app.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -18,12 +24,13 @@ import hu.aut.bme.dg.f1app.model.Driver;
  */
 public class DriverAdapter extends ArrayAdapter<Driver> {
 
-    HashMap<Driver, Integer> mIdMap = new HashMap<Driver, Integer>();
+    HashMap<Driver, Long> mIdMap = new HashMap<Driver, Long>();
 
     public DriverAdapter(Context context, int textViewResourceId, List<Driver> objects) {
         super(context, textViewResourceId, objects);
+
         for (int i = 0; i < objects.size(); ++i) {
-            mIdMap.put(objects.get(i), i);
+            mIdMap.put(objects.get(i), objects.get(i).getId());
         }
     }
 
@@ -47,12 +54,15 @@ public class DriverAdapter extends ArrayAdapter<Driver> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_driver_item, parent, false);
         }
         // Lookup view for data population
-        TextView driverImage = (TextView) convertView.findViewById(R.id.driverImage);
+        ImageView driverImage = (ImageView) convertView.findViewById(R.id.driverImage);
         TextView driverName = (TextView) convertView.findViewById(R.id.driverName);
         TextView driverTeam = (TextView) convertView.findViewById(R.id.driverTeam);
         TextView driverNumber = (TextView) convertView.findViewById(R.id.driverNumber);
         // Populate the data into the template view using the data object
-        driverImage.setText(driver.driverImage);
+        byte[] decodedString = Base64.decode(driver.driverImage, Base64.DEFAULT);
+        Bitmap driverImageBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        driverImage.setImageBitmap(driverImageBitmap);
+
         driverName.setText(driver.driverName);
 
         if(driver.driverTeam != null)
@@ -64,4 +74,5 @@ public class DriverAdapter extends ArrayAdapter<Driver> {
         // Return the completed view to render on screen
         return convertView;
     }
+
 }

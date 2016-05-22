@@ -1,6 +1,7 @@
 package hu.aut.bme.dg.f1app.model;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
 
 import java.util.List;
@@ -10,7 +11,9 @@ import java.util.List;
  */
 public class Driver extends SugarRecord {
 
+    @Ignore
     public int driverId;
+
     public String driverName;
     public int driverNumber;
     public int driverAge;

@@ -6,11 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import hu.aut.bme.dg.f1app.F1Application;
 import hu.aut.bme.dg.f1app.R;
+import hu.aut.bme.dg.f1app.model.Team;
 import hu.aut.bme.dg.f1app.presenter.TeamsPresenter;
 
 /**
@@ -23,6 +30,10 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
     @Inject
     TeamsPresenter teamsPresenter;
 
+    public TeamsActivity() {
+        F1Application.injector.inject(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +43,6 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
         setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
-
-        refreshTeams();
 
     }
 
@@ -46,11 +55,12 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
+        if (id == R.id.team_back) {
+            teamsPresenter.showMain();
+        }
         if (id == R.id.team_refresh) {
             teamsPresenter.refreshTeams();
         }
@@ -65,8 +75,8 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
     public void onStart() {
         super.onStart();
 
-//        artist = getActivity().getIntent().getStringExtra(MainActivity.KEY_ARTIST);
         teamsPresenter.attachView(this);
+        teamsPresenter.refreshTeams();
     }
 
     @Override
@@ -76,22 +86,43 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
         teamsPresenter.detachView();
     }
 
-    @Override
-    public void refreshTeams() {
-        //refresh list
+    public void showMain() {
+        Intent intent = new Intent(TeamsActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
-    @Override
+    public void refreshTeams(List<Team> teams) {
+
+        final ArrayList<Team> list = new ArrayList<>();
+        for (int i = 0; i < teams.size(); ++i) {
+            list.add(teams.get(i));
+        }
+
+        ListView teamListView = (ListView) findViewById(R.id.teamListView);
+        teamListView.setAdapter(
+                new TeamAdapter(getApplicationContext(), R.layout.list_team_item, list));
+        teamListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                teamsPresenter.showTeamDetails(id);
+            }
+
+        });
+
+    }
+
     public void showTeamAdd() {
+
         Intent intent = new Intent(TeamsActivity.this, TeamAddActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void showTeamDetails(int teamId) {
+    public void showTeamDetails(long teamId) {
 
         Intent intent = new Intent(TeamsActivity.this, TeamEditActivity.class);
         intent.putExtra(KEY_TEAM, teamId);
         startActivity(intent);
+
     }
 }

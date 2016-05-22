@@ -21,6 +21,10 @@ public class DriversPresenter extends Presenter<DriversView> {
         F1Application.injector.inject(this);
     }
 
+    public void showMain() {
+        view.showMain();
+    }
+
     public void refreshDrivers() {
 
         try {
@@ -36,7 +40,7 @@ public class DriversPresenter extends Presenter<DriversView> {
         view.showDriverAdd();
     }
 
-    public void showDriverDetails(int driverId) {
+    public void showDriverDetails(long driverId) {
         view.showDriverDetails(driverId);
     }
 

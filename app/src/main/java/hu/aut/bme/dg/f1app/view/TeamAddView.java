@@ -7,4 +7,6 @@ public interface TeamAddView {
 
     void saveTeam();
 
+    void browseTeamImage();
+
 }

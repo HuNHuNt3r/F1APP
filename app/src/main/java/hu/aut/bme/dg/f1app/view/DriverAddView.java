@@ -7,4 +7,6 @@ public interface DriverAddView {
 
     void saveDriver();
 
+    void browseDriverImage();
+
 }
