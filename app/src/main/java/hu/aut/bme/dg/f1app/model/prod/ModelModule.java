@@ -1,4 +1,4 @@
-package hu.aut.bme.dg.f1app.model;
+package hu.aut.bme.dg.f1app.model.prod;
 
 import dagger.Module;
 import dagger.Provides;

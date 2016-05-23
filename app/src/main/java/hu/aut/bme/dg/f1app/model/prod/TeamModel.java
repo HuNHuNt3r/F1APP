@@ -1,9 +1,11 @@
-package hu.aut.bme.dg.f1app.model;
+package hu.aut.bme.dg.f1app.model.prod;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Table;
 
 import java.util.List;
+
+import hu.aut.bme.dg.f1app.model.Team;
 
 /**
  * Created by DG on 2016.05.09..

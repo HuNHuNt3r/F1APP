@@ -1,6 +1,8 @@
-package hu.aut.bme.dg.f1app.model;
+package hu.aut.bme.dg.f1app.model.prod;
 
 import java.util.List;
+
+import hu.aut.bme.dg.f1app.model.Driver;
 
 /**
  * Created by DG on 2016.05.17..

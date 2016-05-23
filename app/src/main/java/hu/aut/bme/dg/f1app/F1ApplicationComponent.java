@@ -6,7 +6,8 @@ import dagger.Component;
 import hu.aut.bme.dg.f1app.interactor.DriverInteractor;
 import hu.aut.bme.dg.f1app.interactor.InteractorModule;
 import hu.aut.bme.dg.f1app.interactor.TeamInteractor;
-import hu.aut.bme.dg.f1app.model.ModelModule;
+import hu.aut.bme.dg.f1app.model.prod.ModelModule;
+import hu.aut.bme.dg.f1app.network.prod.NetworkModule;
 import hu.aut.bme.dg.f1app.presenter.DriverAddPresenter;
 import hu.aut.bme.dg.f1app.presenter.DriverEditPresenter;
 import hu.aut.bme.dg.f1app.presenter.DriversPresenter;
@@ -27,7 +28,7 @@ import hu.aut.bme.dg.f1app.view.ViewModule;
  * Created by DG on 2016.04.24..
  */
 @Singleton
-@Component(modules = {ViewModule.class, InteractorModule.class, ModelModule.class})
+@Component(modules = {ViewModule.class, InteractorModule.class, ModelModule.class, NetworkModule.class})
 public interface F1ApplicationComponent {
 
     void inject(MainActivity mainActivity);

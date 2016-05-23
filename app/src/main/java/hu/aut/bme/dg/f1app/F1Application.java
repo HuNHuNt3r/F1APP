@@ -17,6 +17,17 @@ public class F1Application extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        injector = DaggerF1ApplicationComponent.builder().viewModule(new ViewModule(this)).build();
+//        injector = DaggerF1ApplicationComponent.builder().viewModule(new ViewModule(this)).build();
+
+        if (BuildConfig.FLAVOR.equals("mock")) {
+            injector = DaggerMockF1ApplicationComponent.builder().viewModule(new ViewModule(this)).build();
+        } else {
+            injector = DaggerF1ApplicationComponent.builder().viewModule(new ViewModule(this)).build();
+        }
+    }
+
+    public void setInjector(F1ApplicationComponent appComponent) {
+        injector = appComponent;
+        injector.inject(this);
     }
 }
