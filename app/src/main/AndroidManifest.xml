@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hu.aut.bme.dg.f1app">
 
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <uses-sdk
         android:minSdkVersion="21"
         android:targetSdkVersion="23" />
@@ -62,6 +66,9 @@
             android:label="@string/teamedit"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="7958f204bafaf03110910dd4d24def4477bbf4ae" />
     </application>
 
 </manifest>

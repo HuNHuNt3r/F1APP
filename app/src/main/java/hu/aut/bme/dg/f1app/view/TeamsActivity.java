@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ import hu.aut.bme.dg.f1app.presenter.TeamsPresenter;
 public class TeamsActivity extends AppCompatActivity implements TeamsView {
 
     public static final String KEY_TEAM = "KEY_TEAM";
+    private Tracker mTracker;
 
     @Inject
     TeamsPresenter teamsPresenter;
@@ -44,6 +49,9 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
 
         F1Application.injector.inject(this);
 
+
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
@@ -77,6 +85,10 @@ public class TeamsActivity extends AppCompatActivity implements TeamsView {
 
         teamsPresenter.attachView(this);
         teamsPresenter.refreshTeams();
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: TeamsActivity");
+        mTracker.setScreenName("Image~ TeamsActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -33,6 +36,7 @@ public class DriverEditActivity extends AppCompatActivity implements DriverEditV
     private boolean showDriver = true;
     private int driverId = 0;
     private static int RESULT_LOAD_IMAGE = 1;
+    private Tracker mTracker;
 
     @Inject
     DriverEditPresenter driverEditPresenter;
@@ -50,6 +54,9 @@ public class DriverEditActivity extends AppCompatActivity implements DriverEditV
         setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
+
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
 
         findViewById(R.id.buttonLoadPicture).setOnClickListener(new View.OnClickListener() {
 
@@ -111,6 +118,10 @@ public class DriverEditActivity extends AppCompatActivity implements DriverEditV
         {
             driverEditPresenter.showDriver(driverId);
         }
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: DriverEditActivity");
+        mTracker.setScreenName("Image~ DriverEditActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
 

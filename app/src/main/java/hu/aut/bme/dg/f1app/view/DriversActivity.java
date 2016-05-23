@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ import hu.aut.bme.dg.f1app.presenter.DriversPresenter;
 public class DriversActivity extends AppCompatActivity implements DriversView {
 
     public static final String KEY_DRIVER = "KEY_DRIVER";
+    private Tracker mTracker;
 
     @Inject
     DriversPresenter driversPresenter;
@@ -43,6 +48,9 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
         setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
+
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
 
     }
 
@@ -77,6 +85,10 @@ public class DriversActivity extends AppCompatActivity implements DriversView {
 
         driversPresenter.attachView(this);
         driversPresenter.refreshDrivers();
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: DriversActivity");
+        mTracker.setScreenName("Image~ DriversActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

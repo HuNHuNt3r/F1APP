@@ -11,11 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,6 +33,7 @@ import hu.aut.bme.dg.f1app.presenter.DriverAddPresenter;
 public class DriverAddActivity extends AppCompatActivity implements DriverAddView {
 
     private static int RESULT_LOAD_IMAGE = 1;
+    private Tracker mTracker;
 
     @Inject
     DriverAddPresenter driverAddPresenter;
@@ -42,6 +47,9 @@ public class DriverAddActivity extends AppCompatActivity implements DriverAddVie
         setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
+
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
 
         findViewById(R.id.buttonLoadPicture).setOnClickListener(new View.OnClickListener() {
 
@@ -88,6 +96,10 @@ public class DriverAddActivity extends AppCompatActivity implements DriverAddVie
     protected void onStart() {
         super.onStart();
         driverAddPresenter.attachView(this);
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: DriverAddActivity");
+        mTracker.setScreenName("Image~ DriverAddActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

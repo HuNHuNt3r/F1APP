@@ -31,6 +31,8 @@ import hu.aut.bme.dg.f1app.view.ViewModule;
 @Component(modules = {ViewModule.class, InteractorModule.class, ModelModule.class, NetworkModule.class})
 public interface F1ApplicationComponent {
 
+    void inject(F1Application f1Application);
+
     void inject(MainActivity mainActivity);
     void inject(MainPresenter mainPresenter);
 

@@ -9,11 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,6 +31,7 @@ import hu.aut.bme.dg.f1app.presenter.TeamAddPresenter;
 public class TeamAddActivity extends AppCompatActivity implements TeamAddView {
 
     private static int RESULT_LOAD_IMAGE = 1;
+    private Tracker mTracker;
 
     @Inject
     TeamAddPresenter teamAddPresenter;
@@ -40,6 +45,9 @@ public class TeamAddActivity extends AppCompatActivity implements TeamAddView {
         setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
+
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
 
         findViewById(R.id.buttonLoadPicture).setOnClickListener(new View.OnClickListener() {
 
@@ -85,6 +93,10 @@ public class TeamAddActivity extends AppCompatActivity implements TeamAddView {
     protected void onStart() {
         super.onStart();
         teamAddPresenter.attachView(this);
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: TeamAddActivity");
+        mTracker.setScreenName("Image~ TeamAddActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

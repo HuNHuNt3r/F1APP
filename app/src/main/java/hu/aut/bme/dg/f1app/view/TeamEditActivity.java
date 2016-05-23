@@ -10,11 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.google.common.util.concurrent.ExecutionError;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,6 +37,7 @@ public class TeamEditActivity extends AppCompatActivity implements TeamEditView 
     private boolean showTeam = true;
     private int teamId = 0;
     private static int RESULT_LOAD_IMAGE = 1;
+    private Tracker mTracker;
 
     @Inject
     TeamEditPresenter teamEditPresenter;
@@ -50,11 +56,15 @@ public class TeamEditActivity extends AppCompatActivity implements TeamEditView 
 
         F1Application.injector.inject(this);
 
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
+
         findViewById(R.id.buttonLoadPicture).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                teamEditPresenter.browseTeamImage();
+//                teamEditPresenter.browseTeamImage();
+                throw new RuntimeException("Fabric! Here I am!");
             }
         });
 
@@ -109,6 +119,10 @@ public class TeamEditActivity extends AppCompatActivity implements TeamEditView 
         {
             teamEditPresenter.showTeam(teamId);
         }
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: TeamEditActivity");
+        mTracker.setScreenName("Image~ TeamEditActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
 

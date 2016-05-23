@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.orm.SugarContext;
 
 import javax.inject.Inject;
@@ -24,6 +26,8 @@ import hu.aut.bme.dg.f1app.presenter.MainPresenter;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
+    private Tracker mTracker;
+
     @Inject
     MainPresenter mainPresenter;
 
@@ -31,11 +35,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(BuildConfig.FLAVOR.equals("full")){
+        if(BuildConfig.FLAVOR.equals("mock")){
+            Log.d("F1APP", "mock version is in use");
+        }else{
             SugarContext.init(this);
             Log.d("F1APP", "sugar orm is in use");
-        }else{
-            Log.d("F1APP", "mock version is in use");
+
+
         }
 
 
@@ -45,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 //        setSupportActionBar(toolbar);
 
         F1Application.injector.inject(this);
+
+
+        F1Application application = (F1Application) getApplication();
+        mTracker = application.getDefaultTracker();
 
         findViewById(R.id.showDriversButton).setOnClickListener(new Button.OnClickListener() {
 
@@ -80,6 +90,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onStart() {
         super.onStart();
         mainPresenter.attachView(this);
+
+        Log.i("GOOGLE ANALYTICS", "Setting screen name: MainActivity");
+        mTracker.setScreenName("Image~ MainActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -87,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         super.onDestroy();
         mainPresenter.detachView();
 
-        if(BuildConfig.FLAVOR.equals("full")) {
+        if(!BuildConfig.FLAVOR.equals("mock")) {
 
             Log.d("F1APP", "sugar orm was in use");
             SugarContext.terminate();
